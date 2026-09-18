@@ -1,0 +1,33 @@
+{
+  "kind": "real_historical_search_index_evidence",
+  "observed_at": "2026-09-18",
+  "retrieval": "Web search index; direct page inaccessible, live catalog API returned HTTP 403. Not a live API response or evidence of current availability.",
+  "cases": [
+    {
+      "url": "https://www.vinted.pt/items/6538968398-placa-grafica-rx-5700-8gb-gddr6-defeito",
+      "listing_id": "6538968398",
+      "title": "Placa gráfica RX 5700 8GB GDDR6 ( defeito )",
+      "description_excerpt": "com defeito",
+      "condition_excerpt": "Não está totalmente funcional",
+      "price": 80.0,
+      "currency": "EUR",
+      "price_source": "Indexed asking price, excludes buyer protection price of EUR 84.70",
+      "index_age_reported": "1.2 years ago",
+      "availability": "Retirado!",
+      "expected": {"model": "RX 5700", "condition": "defective", "eligible_for_working_median": false}
+    },
+    {
+      "url": "https://www.vinted.pt/items/6538912763-gigabyte-rtx-3080-10gb",
+      "listing_id": "6538912763",
+      "title": "Gigabyte RTX 3080 10gb",
+      "description_excerpt": "",
+      "condition_excerpt": "",
+      "price": null,
+      "currency": null,
+      "index_age_reported": "1.2 years ago",
+      "availability": "Retirado!",
+      "expected": {"condition": "unknown", "eligible_for_working_median": false},
+      "limitation": "Only title and image labels indexed; no recoverable price or description. Never insert into inventory."
+    }
+  ]
+}

@@ -71,7 +71,7 @@ def row(item, run):
     url = item.get('url') or ''
     parsed = urlparse(url)
     title = esc(item['title'])
-    if parsed.scheme == 'https' and parsed.hostname in {'olx.pt','www.olx.pt'}:
+    if parsed.scheme == 'https' and parsed.hostname in {'olx.pt','www.olx.pt','vinted.pt','www.vinted.pt'}:
         title = f'<a href="{esc(url)}" target="_blank" rel="noopener noreferrer">{title}</a>'
     tags = []
     if item.get('first_seen_run') == run.get('id') and run.get('id') is not None:
@@ -81,6 +81,8 @@ def row(item, run):
     prev = item.get('previous_price')
     if prev is not None and prev != item['price']:
         tags.append(f'last recorded change: {eur(prev)} → {eur(item["price"])}')
+    if not item.get('comparison_eligible'):
+        tags.append('excluded: ' + (item.get('exclusion_reason') or 'not classified'))
     if item['is_defective']:
         tags.append('defect wording in text')
     return (f'<tr><td>{title}<div class="meta">{esc(" · ".join(tags))}</div></td>'
@@ -89,7 +91,7 @@ def row(item, run):
 
 
 def table(items, run):
-    return '<div class="scroll"><table><tr><th>OLX listing</th><th>Location</th><th>Price</th><th>State</th><th>Last seen locally</th></tr>' + ''.join(row(i,run) for i in items) + '</table></div>'
+    return '<div class="scroll"><table><tr><th>Listing</th><th>Location</th><th>Price</th><th>State</th><th>Last seen locally</th></tr>' + ''.join(row(i,run) for i in items) + '</table></div>'
 
 
 def generate(database, out_dir=config.REPORTS_DIR):
@@ -100,17 +102,17 @@ def generate(database, out_dir=config.REPORTS_DIR):
     deals = database.find_deals()
     groups = {}
     for item in items:
-        groups.setdefault((item['category'],item['model'],item['condition']),[]).append(item)
+        groups.setdefault((item['category'],item['model'],item['condition'],item.get('comparison_key') or ''),[]).append(item)
     sections = []
-    for (category,model,condition), listings in sorted(groups.items()):
-        st = stats.get((model,condition),{})
-        clean = [i for i in listings if not i['is_defective']]
-        flagged = [i for i in listings if i['is_defective']]
-        body = table(clean[:config.TOP_N],run) if clean else '<p>No unflagged listings.</p>'
+    for (category,model,condition,comparison_key), listings in sorted(groups.items()):
+        st = stats.get(comparison_key,{})
+        clean = [i for i in listings if i.get('comparison_eligible')]
+        flagged = [i for i in listings if not i.get('comparison_eligible')]
+        body = table(clean[:config.TOP_N],run) if clean else '<p>No eligible comparisons.</p>'
         if len(clean)>config.TOP_N:
             body += f'<details><summary>Remaining {len(clean)-config.TOP_N} listings</summary>{table(clean[config.TOP_N:],run)}</details>'
         if flagged:
-            body += f'<details><summary>Text flags: {len(flagged)} listings (excluded from median)</summary>{table(flagged,run)}</details>'
+            body += f'<details><summary>Manual review: {len(flagged)} listings (excluded from median)</summary>{table(flagged,run)}</details>'
         sections.append(f'<details class="model" data-category="{category}" open><summary>{esc(model)} · {condition} · {len(listings)} listings'
                         f'<span class="mono">median {eur(st.get("median"))} · n={st.get("count",0)}</span></summary>{body}</details>')
     cards = ''.join(f'<div class="card"><div class="pct">−{d["discount_pct"]}%</div><div>{esc(d["model"])}</div>'
@@ -118,24 +120,24 @@ def generate(database, out_dir=config.REPORTS_DIR):
     stamp = datetime.now().strftime('%Y-%m-%d %H:%M')
     notes = esc(run.get('notes','No scan has run yet.')).replace('\n','<br>')
     page = f'''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>OLX component deals</title><style>{CSS}
+<title>Hardware component deals</title><style>{CSS}
 .wrap{{max-width:1400px}}a{{color:var(--copper)}}.scroll{{overflow-x:auto}}.meta,small{{color:var(--muted);font-size:12px}}
 input,select{{padding:10px;margin:6px;background:var(--panel);color:var(--text);border:1px solid var(--line)}}
 .cards{{grid-template-columns:1fr}}.model{{margin-top:14px}}.notice{{padding:16px;background:var(--panel);border:1px solid var(--line)}}
-</style><body><div class="wrap"><header><h1>OLX <b>component deals</b></h1><p>{stamp} · GPU / CPU / RAM</p></header>
+</style><body><div class="wrap"><header><h1>Hardware <b>component deals</b></h1><p>{stamp} · GPU / CPU / RAM</p></header>
 <p class="notice">Candidate listings for manual review. Prices are asking prices, excluding delivery.
-Statistics use one latest price per OLX ad from the past {config.STATS_WINDOW_DAYS} days, separated by model/specification and new/used state.
-Not seeing an ad again does not establish that it sold. No photos are analysed; untested items remain eligible.</p>
+Statistics use one latest price per platform ad from the past {config.STATS_WINDOW_DAYS} days, separated by platform, model/specifications and declared condition.
+Not seeing an ad again does not establish that it sold. Only validated classifications with explicit working condition enter medians. Unknown, untested, defective and ambiguous ads require manual review. Images may supplement missing identification; they cannot establish function.</p>
 <details><summary>Scan status · {esc(run.get('finished_at') or 'not completed')} · {run.get('new_listings',0)} new / {run.get('updated_listings',0)} price changes</summary><p>{notes}</p></details>
 <div class="trace"></div><h2>At least {round((1-config.DEAL_THRESHOLD)*100)}% below median</h2>
 {cards or '<p>No qualifying deals in the stored sample. Check scan status and the cheapest listings below.</p>'}
 <div class="trace"></div><h2>Cheapest {config.TOP_N} per model / specification</h2>
-<p>A median needs {config.MIN_SAMPLES_FOR_STATS} comparable ads. Cheapest lists work immediately. Unknown specifications form separate groups.</p>
+<p>A median needs {config.MIN_SAMPLES_FOR_STATS} comparable ads. Cheapest lists work immediately. Missing required specifications exclude ads from medians.</p>
 <label>Category <select id="category"><option value="">All</option><option>GPU</option><option>CPU</option><option>RAM</option></select></label>
 <label>Search model, title or location <input id="search" placeholder="6600, Gaia, Porto…"></label>
 <p><small>Filters below apply to the per-model lists.</small></p>
 {''.join(sections) or '<p>No recognised components stored yet.</p>'}
-<footer>Run again to refresh. Scan scope is the configured queries and page limit, not all OLX inventory.</footer></div>
+<footer>Run again to refresh. Scan scope is the configured queries and page limit, not all platform inventory.</footer></div>
 <script>
 function filter(){{const q=document.getElementById('search').value.toLowerCase();const c=document.getElementById('category').value;
 for(const e of document.querySelectorAll('.model')) e.hidden=!!((c&&e.dataset.category!==c)||!e.textContent.toLowerCase().includes(q));}}

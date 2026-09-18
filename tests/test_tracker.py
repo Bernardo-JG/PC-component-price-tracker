@@ -33,7 +33,7 @@ class Matching(unittest.TestCase):
 
     def test_skip_pc_keep_old_and_untested(self):
         for title in ['PC gaming completo RTX 2060','Ryzen 3600 + RTX 2060','kit Ryzen 5600 motherboard','Ventoinha RTX 2060','RTX 2060 + RX 6600','Bateria HP 6600 mAh','MSI X370 Gaming Plus Ryzen 5000']:
-            self.assertIsNone(item(title=title))
+            self.assertIsNotNone(item(title=title))  # Raw adapters preserve ads for shared classification
         self.assertIsNotNone(item(title='GTX 1060 6GB por testar'))
         self.assertFalse(matcher.is_defective('RTX 2060 sem defeitos'))
         self.assertTrue(matcher.is_defective('6600 avariada'))
@@ -57,15 +57,12 @@ class Storage(unittest.TestCase):
         saved=self.db.active_listings()[0]
         self.assertEqual(saved['location'],'Porto');self.assertEqual(saved['previous_price'],100)
 
-    def test_median_unique_ads_condition_and_flags(self):
+    def test_unvalidated_legacy_ads_do_not_feed_medians(self):
         for i,price in enumerate([100,150,160,170]):
             self.db.upsert_listing(item(str(i),price))
-        for _ in range(5): self.db.upsert_listing(item('0',100))
-        broken=item('broken',20);broken['is_defective']=True;self.db.upsert_listing(broken)
-        new=item('new',400);new['condition']='new';self.db.upsert_listing(new)
-        stats=self.db.model_stats()[('RX 6600','used')]
-        self.assertEqual(stats,{'median':155,'count':4})
-        self.assertEqual([d['listing_id'] for d in self.db.find_deals()],['0'])
+        self.assertEqual(self.db.model_stats(), {})
+        self.assertEqual(self.db.find_deals(), [])
+        self.assertTrue(all(row['exclusion_reason'] == 'not_classified' for row in self.db.active_listings()))
 
     def test_report_without_median_and_escaping(self):
         self.db.upsert_listing(item(title='6600 <script>alert(1)</script>'))
@@ -81,7 +78,8 @@ class Storage(unittest.TestCase):
             path=str(Path(d)/'legacy.db');c=sqlite3.connect(path);c.executescript(SCHEMA)
             c.execute("INSERT INTO listings (site,listing_id,title,price,model,condition,first_seen,last_seen) VALUES ('olx','old','RTX 2060',100,'RTX 2060','used','2026-09-11','2026-09-11')")
             c.commit();c.close();db=Database(path)
-            self.assertEqual(db.conn.execute("SELECT category FROM listings").fetchone()[0],'GPU')
+            self.assertEqual(db.conn.execute("SELECT comparison_eligible FROM listings").fetchone()[0],0)
+            self.assertEqual(db.conn.execute("SELECT exclusion_reason FROM listings").fetchone()[0],'not_classified')
             db.conn.close()
 
 

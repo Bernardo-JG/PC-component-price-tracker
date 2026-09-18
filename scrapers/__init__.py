@@ -1,2 +1,3 @@
 from .olx import OlxScraper
-SCRAPERS = {"olx": OlxScraper}
+from .vinted import VintedScraper
+SCRAPERS = {"olx": OlxScraper, "vinted": VintedScraper}

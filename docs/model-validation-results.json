@@ -1,0 +1,599 @@
+{
+  "executed_at": "2026-09-18T20:11:28.893116+00:00",
+  "mode": "actual_model_inference",
+  "results": [
+    {
+      "fixture": "tests/fixtures/synthetic/cases.json",
+      "case": "synthetic-0",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "url": "",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Unsupported claim: model",
+        "rule_candidates": [
+          {
+            "category": "GPU",
+            "model": "RTX 3080 (VRAM unknown)"
+          }
+        ],
+        "rule_guard": "accessory",
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T17:31:39.466890+00:00",
+        "input_sha256": "ca1fdd4841ab46d597cf7bb60aabca816377cdd85a1a24e2efdc3440f60e0a1d"
+      },
+      "checks": {
+        "kind": false,
+        "eligible": true
+      }
+    },
+    {
+      "fixture": "tests/fixtures/synthetic/cases.json",
+      "case": "synthetic-1",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "url": "",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Unsupported claim: kind",
+        "rule_candidates": [
+          {
+            "category": "GPU",
+            "model": "RTX 2060 (VRAM unknown)"
+          }
+        ],
+        "rule_guard": "accessory",
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T17:32:01.596426+00:00",
+        "input_sha256": "51a3aeb623869a9a905031124f1c4aabd4c69ab7f94fbb9c88c0e6a0432376a8"
+      },
+      "checks": {
+        "kind": false,
+        "eligible": true
+      }
+    },
+    {
+      "fixture": "tests/fixtures/synthetic/cases.json",
+      "case": "synthetic-2",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "url": "",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Unsupported claim: brand",
+        "rule_candidates": [
+          {
+            "category": "GPU",
+            "model": "RX 6600"
+          }
+        ],
+        "rule_guard": "wanted",
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T17:32:20.628568+00:00",
+        "input_sha256": "d93d98b1f3e77c4a73561b376326b881690a022a2b49375c4b24a8fd9fd59724"
+      },
+      "checks": {
+        "kind": false,
+        "eligible": true
+      }
+    },
+    {
+      "fixture": "tests/fixtures/synthetic/cases.json",
+      "case": "synthetic-3",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "url": "",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Unsupported claim: model",
+        "rule_candidates": [],
+        "rule_guard": "bundle",
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T17:32:40.212396+00:00",
+        "input_sha256": "1e6749bfce9762dec3ef974299c4e4d4424f1fc76345f36e5df1764f4198f0c9"
+      },
+      "checks": {
+        "kind": false,
+        "eligible": true
+      }
+    },
+    {
+      "fixture": "tests/fixtures/synthetic/cases.json",
+      "case": "synthetic-4",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "url": "",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Unsupported claim: kind",
+        "rule_candidates": [
+          {
+            "category": "GPU",
+            "model": "RTX 2060 6GB"
+          }
+        ],
+        "rule_guard": "defective",
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T17:33:05.911565+00:00",
+        "input_sha256": "05fd11c0ae5f57d2e4561bd5e92a4ff79d9948ce281b6a7f55a5b3d111773ceb"
+      },
+      "checks": {
+        "kind": false,
+        "eligible": true
+      }
+    },
+    {
+      "fixture": "tests/fixtures/synthetic/cases.json",
+      "case": "synthetic-5",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "url": "",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Unsupported claim: kind",
+        "rule_candidates": [
+          {
+            "category": "GPU",
+            "model": "RX 6600"
+          }
+        ],
+        "rule_guard": "untested",
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T17:33:27.386551+00:00",
+        "input_sha256": "25cbc63eef115a463f15d448cf63bafc93c66b58ca5539e913f6f76e736470ac"
+      },
+      "checks": {
+        "kind": false,
+        "eligible": true
+      }
+    },
+    {
+      "fixture": "tests/fixtures/synthetic/cases.json",
+      "case": "synthetic-6",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "url": "",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Unsupported claim: kind",
+        "rule_candidates": [
+          {
+            "category": "GPU",
+            "model": "RX 6600"
+          }
+        ],
+        "rule_guard": null,
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T20:09:29.657236+00:00",
+        "input_sha256": "617f0e91329103d43da289a2023143a7c9a3f6e4f61854272dc63a7dff5fd91a"
+      },
+      "checks": {
+        "kind": false,
+        "eligible": false
+      }
+    },
+    {
+      "fixture": "tests/fixtures/olx/complete_pc_bundle.json",
+      "case": "complete_pc_bundle",
+      "provenance": {
+        "fixture_kind": "real",
+        "retrieved_at": "2026-09-18",
+        "source_url": "https://www.olx.pt/d/anuncio/pc-gaming-rtx-3060-i7-12700kf-16gb-ram-1tb-ssd-water-cooler-IDIIGR1.html",
+        "capture_method": "HTTP GET public OLX API; selected response fields, seller identity/contact omitted"
+      },
+      "url": "https://www.olx.pt/d/anuncio/pc-gaming-rtx-3060-i7-12700kf-16gb-ram-1tb-ssd-water-cooler-IDIIGR1.html",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Unsupported claim: kind",
+        "rule_candidates": [
+          {
+            "category": "CPU",
+            "model": "Intel i7-12700KF"
+          },
+          {
+            "category": "GPU",
+            "model": "RTX 3060 (VRAM unknown)"
+          }
+        ],
+        "rule_guard": null,
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T20:09:51.788370+00:00",
+        "input_sha256": "ff1ac9576e5b600c1ae520ed3dea7a08fd139c66bc012f4a6189b733a333ba50"
+      },
+      "checks": {
+        "kind": false,
+        "eligible": true
+      }
+    },
+    {
+      "fixture": "tests/fixtures/olx/cooler_accessory.json",
+      "case": "cooler_accessory",
+      "provenance": {
+        "fixture_kind": "real",
+        "retrieved_at": "2026-09-18",
+        "source_url": "https://www.olx.pt/d/anuncio/capa-cooler-rtx-3080-msi-ventus-3x-IDJqzWK.html",
+        "capture_method": "HTTP GET public OLX API; selected response fields, seller identity/contact omitted"
+      },
+      "url": "https://www.olx.pt/d/anuncio/capa-cooler-rtx-3080-msi-ventus-3x-IDJqzWK.html",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Functional condition lacks explicit supporting wording",
+        "rule_candidates": [
+          {
+            "category": "GPU",
+            "model": "RTX 3080 (VRAM unknown)"
+          }
+        ],
+        "rule_guard": null,
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T20:10:19.900389+00:00",
+        "input_sha256": "802eb9e7fd3e6a302b12507751e4a550f213211e1817b066782596b57b422f79"
+      },
+      "checks": {
+        "kind": false,
+        "eligible": true
+      }
+    },
+    {
+      "fixture": "tests/fixtures/olx/water_damaged_gpu.json",
+      "case": "water_damaged_gpu",
+      "provenance": {
+        "fixture_kind": "real",
+        "retrieved_at": "2026-09-18",
+        "source_url": "https://www.olx.pt/d/anuncio/rtx-2060-avariada-IDJfZ36.html",
+        "capture_method": "HTTP GET public OLX API; selected response fields, seller identity/contact omitted"
+      },
+      "url": "https://www.olx.pt/d/anuncio/rtx-2060-avariada-IDJfZ36.html",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Unsupported claim: kind",
+        "rule_candidates": [
+          {
+            "category": "GPU",
+            "model": "RTX 2060 (VRAM unknown)"
+          }
+        ],
+        "rule_guard": "defective",
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T20:10:42.142719+00:00",
+        "input_sha256": "f11ef6b1564565e07f00e5577e60f7aaa7a75fb46c115df0493c56d8c40afc10"
+      },
+      "checks": {
+        "kind": false,
+        "eligible": true
+      }
+    },
+    {
+      "fixture": "tests/fixtures/vinted/real_indexed.json",
+      "case": "6538968398",
+      "provenance": {
+        "type": "real_historical_search_index_evidence",
+        "observed_at": "2026-09-18",
+        "retrieval": "Web search index; direct page inaccessible, live catalog API returned HTTP 403. Not a live API response or evidence of current availability."
+      },
+      "url": "https://www.vinted.pt/items/6538968398-placa-grafica-rx-5700-8gb-gddr6-defeito",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Unsupported claim: kind",
+        "rule_candidates": [
+          {
+            "category": "GPU",
+            "model": "RX 5700"
+          }
+        ],
+        "rule_guard": null,
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T20:11:06.942656+00:00",
+        "input_sha256": "4bc7b011d3610539c03d86b1b6c91ae1bc1ade6e83aaed76827c281377228da2"
+      },
+      "checks": {
+        "eligible": true
+      }
+    },
+    {
+      "fixture": "tests/fixtures/vinted/real_indexed.json",
+      "case": "6538912763",
+      "provenance": {
+        "type": "real_historical_search_index_evidence",
+        "observed_at": "2026-09-18",
+        "retrieval": "Web search index; direct page inaccessible, live catalog API returned HTTP 403. Not a live API response or evidence of current availability."
+      },
+      "url": "https://www.vinted.pt/items/6538912763-gigabyte-rtx-3080-10gb",
+      "result": {
+        "kind": "ambiguous",
+        "category": null,
+        "brand": null,
+        "model": null,
+        "specifications": {
+          "vram_gb": null,
+          "memory_type": null,
+          "capacity_gb": null,
+          "layout": null,
+          "speed_mts": null,
+          "form_factor": null
+        },
+        "functional_condition": "unknown",
+        "evidence": [],
+        "needs_visual": false,
+        "abstain": true,
+        "schema_version": "1",
+        "comparison": {
+          "eligible": false,
+          "exclusion_reason": "classification_error",
+          "key": null
+        },
+        "error": "ValueError: Unsupported claim: kind",
+        "rule_candidates": [
+          {
+            "category": "GPU",
+            "model": "RTX 3080 10GB"
+          }
+        ],
+        "rule_guard": null,
+        "visual_status": "not_needed",
+        "text_model": "qwen3.8-27b-iq3s",
+        "classified_at": "2026-09-18T20:11:28.893038+00:00",
+        "input_sha256": "2f2c601de9099d18801b029f15cad72c481189c23399f53bf79e3c6c2525d100"
+      },
+      "checks": {
+        "eligible": true
+      }
+    }
+  ]
+}

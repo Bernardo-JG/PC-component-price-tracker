@@ -1,0 +1,158 @@
+{
+  "cases": [
+    {
+      "id": "synthetic-0",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "listing": {
+        "site": "olx",
+        "listing_id": "synthetic-0",
+        "title": "cooler para RTX 3080",
+        "description": "Só o dissipador, não inclui placa gráfica.",
+        "price": 100.0,
+        "currency": "EUR",
+        "condition": "used",
+        "url": "",
+        "images": []
+      },
+      "expected": {
+        "kind": "accessory",
+        "eligible": false
+      }
+    },
+    {
+      "id": "synthetic-1",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "listing": {
+        "site": "olx",
+        "listing_id": "synthetic-1",
+        "title": "caixa de RTX 2060",
+        "description": "Caixa vazia, sem placa.",
+        "price": 100.0,
+        "currency": "EUR",
+        "condition": "used",
+        "url": "",
+        "images": []
+      },
+      "expected": {
+        "kind": "accessory",
+        "eligible": false
+      }
+    },
+    {
+      "id": "synthetic-2",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "listing": {
+        "site": "olx",
+        "listing_id": "synthetic-2",
+        "title": "procuro RX 6600",
+        "description": "Quero comprar uma placa.",
+        "price": 100.0,
+        "currency": "EUR",
+        "condition": "used",
+        "url": "",
+        "images": []
+      },
+      "expected": {
+        "kind": "wanted",
+        "eligible": false
+      }
+    },
+    {
+      "id": "synthetic-3",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "listing": {
+        "site": "olx",
+        "listing_id": "synthetic-3",
+        "title": "Bundle Ryzen 5600 + RX 6600",
+        "description": "Vendo os dois componentes juntos.",
+        "price": 100.0,
+        "currency": "EUR",
+        "condition": "used",
+        "url": "",
+        "images": []
+      },
+      "expected": {
+        "kind": "bundle",
+        "eligible": false
+      }
+    },
+    {
+      "id": "synthetic-4",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "listing": {
+        "site": "olx",
+        "listing_id": "synthetic-4",
+        "title": "RTX 2060 6GB avariada",
+        "description": "Não dá imagem. Para peças.",
+        "price": 100.0,
+        "currency": "EUR",
+        "condition": "used",
+        "url": "",
+        "images": []
+      },
+      "expected": {
+        "kind": "component",
+        "eligible": false
+      }
+    },
+    {
+      "id": "synthetic-5",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "listing": {
+        "site": "olx",
+        "listing_id": "synthetic-5",
+        "title": "RX 6600",
+        "description": "Não sei a memória. Não testada.",
+        "price": 100.0,
+        "currency": "EUR",
+        "condition": "used",
+        "url": "",
+        "images": []
+      },
+      "expected": {
+        "kind": "component",
+        "eligible": false
+      }
+    },
+    {
+      "id": "synthetic-6",
+      "provenance": {
+        "type": "synthetic",
+        "note": "Invented regression input, not a real advertisement"
+      },
+      "listing": {
+        "site": "olx",
+        "listing_id": "synthetic-6",
+        "title": "Sapphire RX 6600 8GB",
+        "description": "Placa gráfica usada, testada e a funcionar sem problemas.",
+        "price": 100.0,
+        "currency": "EUR",
+        "condition": "used",
+        "url": "",
+        "images": []
+      },
+      "expected": {
+        "kind": "component",
+        "eligible": true
+      }
+    }
+  ]
+}

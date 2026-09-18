@@ -4,7 +4,9 @@ import random
 import time
 import urllib.request
 import config
-import matcher
+import math
+import html
+import re
 
 
 class BaseScraper:
@@ -23,26 +25,22 @@ class BaseScraper:
         with urllib.request.urlopen(req, timeout=config.REQUEST_TIMEOUT) as response:
             return json.load(response)
 
-    def build_listing(self, listing_id, title, price, url, description='', location='', condition='used'):
+    def build_listing(self, listing_id, title, price, url, description='', location='', condition='unknown', images=None, currency='EUR'):
         try:
             price = float(price)
         except (TypeError, ValueError):
             return None
-        if listing_id is None or matcher.is_junk(title, price):
+        if listing_id is None or not math.isfinite(price) or price <= 0 or not title:
             return None
-        parsed = matcher.classify(title, description)
-        if not parsed:
-            return None
-        category, model = parsed
-        return dict(site=self.site, listing_id=str(listing_id), title=title.strip()[:300],
-                    price=price, url=url, category=category, model=model, condition=condition,
-                    is_defective=matcher.is_defective(title, description), location=location,
-                    description=description)
+        description = html.unescape(re.sub(r'<[^>]+>', ' ', description or ''))
+        return dict(site=self.site, listing_id=str(listing_id), title=title.strip(),
+                    price=price, currency=currency, url=url, condition=condition,
+                    location=location, description=description, images=list(images or []))
 
     def scrape(self, queries=None):
         results = {}
         for query in (queries if queries is not None else config.MAIN_QUERIES):
-            print(f'OLX: {query}', flush=True)
+            print(f'{self.site.upper()}: {query}', flush=True)
             try:
                 # Generator preserves earlier pages when a later page fails.
                 for item in self.search(query):

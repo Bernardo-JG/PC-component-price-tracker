@@ -2,6 +2,7 @@
 
 import sqlite3
 import statistics
+import json
 from datetime import datetime, timedelta
 
 import config
@@ -54,20 +55,12 @@ class Database:
         self.conn.executescript(SCHEMA)
         columns = {r[1] for r in self.conn.execute('PRAGMA table_info(listings)')}
         for name, definition in [('category', "TEXT DEFAULT ''"), ('location', "TEXT DEFAULT ''"),
-                                 ('description', "TEXT DEFAULT ''"), ('first_seen_run', 'INTEGER'), ('last_seen_run', 'INTEGER')]:
+                                 ('description', "TEXT DEFAULT ''"), ('images_json', "TEXT DEFAULT '[]'"),
+                                 ('classification_json', 'TEXT'), ('comparison_key', 'TEXT'),
+                                 ('comparison_eligible', 'INTEGER DEFAULT 0'), ('exclusion_reason', "TEXT DEFAULT 'not_classified'"), ('first_seen_run', 'INTEGER'), ('last_seen_run', 'INTEGER')]:
             if name not in columns:
                 self.conn.execute(f'ALTER TABLE listings ADD COLUMN {name} {definition}')
         self.conn.commit()
-        # Reclassify observations when recognition rules change; preserve history.
-        import matcher
-        for row in self.conn.execute("SELECT id,title,description,price FROM listings ").fetchall():
-            parsed = matcher.classify(row['title'], row['description'])
-            if parsed and not matcher.is_junk(row['title'], row['price']):
-                self.conn.execute('UPDATE listings SET category=?,model=?,is_defective=? WHERE id=?', (*parsed,int(matcher.is_defective(row['title'],row['description'])),row['id']))
-            else:
-                self.conn.execute("UPDATE listings SET category='' WHERE id=?", (row['id'],))
-        self.conn.commit()
-
     # -- writes -------------------------------------------------------------
 
     def start_run(self) -> int:
@@ -84,10 +77,36 @@ class Database:
 
     def upsert_listing(self, l: dict, run_id=None) -> str:
         ts = now()
+        l = dict(l)
+        classification = l.get('classification')
+        comparison = {}
+        if classification:
+            # Revalidate at the storage boundary instead of trusting a caller's eligible flag.
+            from classification import comparison as eligibility, guards
+            from classification.schema import SCHEMA, decode
+            try:
+                core = {k: classification[k] for k in SCHEMA['required']}
+                verified = decode(json.dumps(core), l, allow_images=True)
+                if not classification.get('error'):
+                    comparison = eligibility(verified, l, guards(l))
+                l['category'] = verified['category'] or ''
+                l['model'] = verified['model'] or 'Unknown'
+                l['is_defective'] = verified['functional_condition'] == 'defective' or guards(l) == 'defective'
+            except (ValueError, KeyError, TypeError):
+                comparison = {'eligible': False, 'exclusion_reason': 'invalid_stored_classification', 'key': None}
+            if not comparison:
+                comparison = {'eligible': False, 'exclusion_reason': 'classification_error', 'key': None}
+            classification = dict(classification, comparison=comparison)
+        l['images_json'] = json.dumps(l.get('images', []))
+        l['classification_json'] = json.dumps(classification, ensure_ascii=False) if classification else None
+        l['comparison_key'] = comparison.get('key')
+        l['comparison_eligible'] = int(comparison.get('eligible') is True and bool(comparison.get('key')) and not classification.get('error')) if classification else 0
+        l['exclusion_reason'] = comparison.get('exclusion_reason') or (None if l['comparison_eligible'] else 'not_classified')
         old = self.conn.execute("SELECT * FROM listings WHERE site=? AND listing_id=?",
                                 (l['site'], l['listing_id'])).fetchone()
         fields = ['title','price','currency','url','model','condition','is_defective',
-                  'category','location','description','last_seen','last_seen_run']
+                  'category','location','description','images_json','classification_json','comparison_key',
+                  'comparison_eligible','exclusion_reason','last_seen','last_seen_run']
         values = [l.get(k, '') for k in fields]
         values[2] = l.get('currency', 'EUR')
         values[6] = int(l.get('is_defective', False))
@@ -113,14 +132,13 @@ class Database:
         return [dict(r) for r in self.conn.execute(
             """SELECT l.*, (SELECT h.price FROM price_history h WHERE h.listing_pk=l.id
                 ORDER BY h.id DESC LIMIT 1 OFFSET 1) AS previous_price
-                FROM listings l WHERE site='olx' AND last_seen>=?
-                AND category IN ('GPU','CPU','RAM') ORDER BY model,price""", (start,))]
+                FROM listings l WHERE site IN ('olx','vinted') AND last_seen>=? ORDER BY model,price""", (start,))]
 
     def model_stats(self):
         buckets = {}
         for item in self.active_listings():
-            if not item['is_defective']:
-                buckets.setdefault((item['model'],item['condition']), []).append(item['price'])
+            if item['comparison_eligible'] and not item['is_defective']:
+                buckets.setdefault(item['comparison_key'], []).append(item['price'])
         return {key:dict(median=statistics.median(prices) if len(prices)>=config.MIN_SAMPLES_FOR_STATS else None,
                          count=len(prices)) for key,prices in buckets.items()}
 
@@ -128,8 +146,8 @@ class Database:
         stats = self.model_stats()
         deals = []
         for item in self.active_listings():
-            med = stats.get((item['model'],item['condition']),{}).get('median')
-            if med and not item['is_defective'] and item['price']<=config.DEAL_THRESHOLD*med:
+            med = stats.get(item['comparison_key'],{}).get('median')
+            if med and item['comparison_eligible'] and not item['is_defective'] and item['price']<=config.DEAL_THRESHOLD*med:
                 deals.append(dict(item,median_used=med,discount_pct=round(100*(1-item['price']/med))))
         return sorted(deals,key=lambda d:-d['discount_pct'])
 

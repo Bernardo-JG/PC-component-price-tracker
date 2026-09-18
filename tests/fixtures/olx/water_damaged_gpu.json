@@ -1,0 +1,97 @@
+{
+  "fixture_kind": "real",
+  "retrieved_at": "2026-09-18",
+  "source_url": "https://www.olx.pt/d/anuncio/rtx-2060-avariada-IDJfZ36.html",
+  "api_url": "https://www.olx.pt/api/v1/offers/668744716/",
+  "capture_method": "HTTP GET public OLX API; selected response fields, seller identity/contact omitted",
+  "source_payload": {
+    "data": {
+      "id": 668744716,
+      "title": "Rtx 2060 Avariada",
+      "description": "Gráfica Rtx 2060 avariada, levou com água",
+      "url": "https://www.olx.pt/d/anuncio/rtx-2060-avariada-IDJfZ36.html",
+      "status": "active",
+      "params": [
+        {
+          "key": "price",
+          "name": "Preço",
+          "type": "price",
+          "value": {
+            "value": 60,
+            "type": "price",
+            "arranged": false,
+            "budget": false,
+            "currency": "EUR",
+            "negotiable": false,
+            "converted_value": null,
+            "previous_value": null,
+            "converted_previous_value": null,
+            "converted_currency": null,
+            "label": "60 €",
+            "previous_label": null
+          }
+        },
+        {
+          "key": "state",
+          "name": "Estado",
+          "type": "select",
+          "value": {
+            "key": "used",
+            "label": "Usado"
+          }
+        },
+        {
+          "key": "type",
+          "name": "Tipo",
+          "type": "select",
+          "value": {
+            "key": "video-cards",
+            "label": "Placas Gráficas"
+          }
+        }
+      ],
+      "location": {
+        "city": {
+          "id": 11540540,
+          "name": "Estrela",
+          "normalized_name": "lapa"
+        },
+        "region": {
+          "id": 11,
+          "name": "Lisboa",
+          "normalized_name": "lisboa"
+        }
+      },
+      "photos": [
+        {
+          "id": 3335366097,
+          "filename": "a0x5lchfo1xf-PT",
+          "rotation": 270,
+          "width": 750,
+          "height": 1000,
+          "link": "https://ireland.apollo.olxcdn.com:443/v1/files/a0x5lchfo1xf-PT/image;s={width}x{height};r=90"
+        },
+        {
+          "id": 3335366099,
+          "filename": "j3mrparb3e9j1-PT",
+          "rotation": 270,
+          "width": 750,
+          "height": 1000,
+          "link": "https://ireland.apollo.olxcdn.com:443/v1/files/j3mrparb3e9j1-PT/image;s={width}x{height};r=90"
+        },
+        {
+          "id": 3335366101,
+          "filename": "hy0yea5gdems-PT",
+          "rotation": 270,
+          "width": 750,
+          "height": 1000,
+          "link": "https://ireland.apollo.olxcdn.com:443/v1/files/hy0yea5gdems-PT/image;s={width}x{height};r=90"
+        }
+      ]
+    }
+  },
+  "expected": {
+    "sale_kind": "component",
+    "eligible_for_normal_working_gpu_median": false
+  }
+}

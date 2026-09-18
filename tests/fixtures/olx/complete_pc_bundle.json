@@ -1,0 +1,87 @@
+{
+  "fixture_kind": "real",
+  "retrieved_at": "2026-09-18",
+  "source_url": "https://www.olx.pt/d/anuncio/pc-gaming-rtx-3060-i7-12700kf-16gb-ram-1tb-ssd-water-cooler-IDIIGR1.html",
+  "api_url": "https://www.olx.pt/api/v1/offers/660809951/",
+  "capture_method": "HTTP GET public OLX API; selected response fields, seller identity/contact omitted",
+  "source_payload": {
+    "data": {
+      "id": 660809951,
+      "title": "PC Gaming RTX 3060/i7-12700kf/16GB RAM/1TB SSD/Water Cooler",
+      "description": "PC Gaming RTX 3060/i7-12700kf/16GB RAM/1TB SSD/Water Cooler<br />\n<br />\nCaixa ATX Corsair Carbide SPEC-DELTA RGB<br />\nWater Cooler CPU Corsair Hydro Series H1<br />\nMemória RAM Corsair Vengeance C18 16GB\t<br />\nFonte de Alimentação Corsair CV Series C\t<br />\nPlaca Gráfica Asus Dual GeForce RTX 3060<br />\nProcessador Intel Core i7-12700KF 12-Cor<br />\nSSD M.2 2280 Western Digital Blue SN570<br />\nMotherboard Micro-ATX Asus Prime B660M-A",
+      "url": "https://www.olx.pt/d/anuncio/pc-gaming-rtx-3060-i7-12700kf-16gb-ram-1tb-ssd-water-cooler-IDIIGR1.html",
+      "status": "active",
+      "params": [
+        {
+          "key": "price",
+          "name": "Preço",
+          "type": "price",
+          "value": {
+            "value": 790,
+            "type": "price",
+            "arranged": false,
+            "budget": false,
+            "currency": "EUR",
+            "negotiable": false,
+            "converted_value": null,
+            "previous_value": null,
+            "converted_previous_value": null,
+            "converted_currency": null,
+            "label": "790 €",
+            "previous_label": null
+          }
+        }
+      ],
+      "location": {
+        "city": {
+          "id": 3151890,
+          "name": "Esposende, Marinhas E Gandra",
+          "normalized_name": "esposende-esposende"
+        },
+        "region": {
+          "id": 3,
+          "name": "Braga",
+          "normalized_name": "braga"
+        }
+      },
+      "photos": [
+        {
+          "id": 2756666451,
+          "filename": "t1yxumurz1sk1-PT",
+          "rotation": 0,
+          "width": 3024,
+          "height": 4032,
+          "link": "https://ireland.apollo.olxcdn.com:443/v1/files/t1yxumurz1sk1-PT/image;s={width}x{height}"
+        },
+        {
+          "id": 2756666452,
+          "filename": "vcv9vlzl3jrd1-PT",
+          "rotation": 0,
+          "width": 3024,
+          "height": 4032,
+          "link": "https://ireland.apollo.olxcdn.com:443/v1/files/vcv9vlzl3jrd1-PT/image;s={width}x{height}"
+        },
+        {
+          "id": 2756666453,
+          "filename": "j86llb4skgnf1-PT",
+          "rotation": 0,
+          "width": 3024,
+          "height": 4032,
+          "link": "https://ireland.apollo.olxcdn.com:443/v1/files/j86llb4skgnf1-PT/image;s={width}x{height}"
+        },
+        {
+          "id": 2756666454,
+          "filename": "p2f1hmvxhlgl3-PT",
+          "rotation": 0,
+          "width": 3024,
+          "height": 4032,
+          "link": "https://ireland.apollo.olxcdn.com:443/v1/files/p2f1hmvxhlgl3-PT/image;s={width}x{height}"
+        }
+      ]
+    }
+  },
+  "expected": {
+    "sale_kind": "bundle",
+    "eligible_for_normal_working_gpu_median": false
+  }
+}

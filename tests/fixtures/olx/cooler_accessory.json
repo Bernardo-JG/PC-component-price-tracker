@@ -1,0 +1,98 @@
+{
+  "fixture_kind": "real",
+  "retrieved_at": "2026-09-18",
+  "source_url": "https://www.olx.pt/d/anuncio/capa-cooler-rtx-3080-msi-ventus-3x-IDJqzWK.html",
+  "api_url": "https://www.olx.pt/api/v1/offers/671269768/",
+  "capture_method": "HTTP GET public OLX API; selected response fields, seller identity/contact omitted",
+  "source_payload": {
+    "data": {
+      "id": 671269768,
+      "title": "Capa cooler RTX 3080 MSI Ventus 3X",
+      "description": "Capa plástica do cooler para MSI RTX 3080 Ventus 3X.<br />\nUsado, vindo de uma GPU que acabou em curto no chip, internamente.<br />\nSem ventoinhas, as mesmas estavam a ficar estragadas. (já nao rodavam livremente)",
+      "url": "https://www.olx.pt/d/anuncio/capa-cooler-rtx-3080-msi-ventus-3x-IDJqzWK.html",
+      "status": "active",
+      "params": [
+        {
+          "key": "price",
+          "name": "Preço",
+          "type": "price",
+          "value": {
+            "value": 10,
+            "type": "price",
+            "arranged": false,
+            "budget": false,
+            "currency": "EUR",
+            "negotiable": false,
+            "converted_value": null,
+            "previous_value": null,
+            "converted_previous_value": null,
+            "converted_currency": null,
+            "label": "10 €",
+            "previous_label": null
+          }
+        },
+        {
+          "key": "state",
+          "name": "Estado",
+          "type": "select",
+          "value": {
+            "key": "used",
+            "label": "Usado"
+          }
+        },
+        {
+          "key": "marca",
+          "name": "Marca",
+          "type": "select",
+          "value": {
+            "key": "outras_marcas",
+            "label": "Outras Marcas"
+          }
+        },
+        {
+          "key": "type",
+          "name": "Tipo",
+          "type": "select",
+          "value": {
+            "key": "computer-cooling",
+            "label": "Dissipadores de Calor"
+          }
+        }
+      ],
+      "location": {
+        "city": {
+          "id": 18897920,
+          "name": "Viseu",
+          "normalized_name": "viseucity"
+        },
+        "region": {
+          "id": 18,
+          "name": "Viseu",
+          "normalized_name": "viseu"
+        }
+      },
+      "photos": [
+        {
+          "id": 3573317153,
+          "filename": "38gxdo5f9wvz2-PT",
+          "rotation": 0,
+          "width": 750,
+          "height": 1000,
+          "link": "https://ireland.apollo.olxcdn.com:443/v1/files/38gxdo5f9wvz2-PT/image;s={width}x{height}"
+        },
+        {
+          "id": 3573317154,
+          "filename": "ypnnr0asiop8-PT",
+          "rotation": 0,
+          "width": 750,
+          "height": 1000,
+          "link": "https://ireland.apollo.olxcdn.com:443/v1/files/ypnnr0asiop8-PT/image;s={width}x{height}"
+        }
+      ]
+    }
+  },
+  "expected": {
+    "sale_kind": "accessory",
+    "eligible_for_normal_working_gpu_median": false
+  }
+}

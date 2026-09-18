@@ -1,16 +1,42 @@
 """OLX adapter. Paginated collection; reports errors and coverage limits."""
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlsplit
 from .base import BaseScraper
 import config
 
 
 class OlxScraper(BaseScraper):
+    site = 'olx'
     API = 'https://www.olx.pt/api/v1/offers/'
+
+    @staticmethod
+    def image_urls(item):
+        """Expand OLX photo templates using reported dimensions, capped at 1024px."""
+        images = []
+        for photo in item.get('photos') or []:
+            if not isinstance(photo, dict):
+                continue
+            link = photo.get('link')
+            if not isinstance(link, str):
+                continue
+            try:
+                width = max(1, int(photo.get('width') or 1024))
+                height = max(1, int(photo.get('height') or 1024))
+                scale = min(1, 1024 / max(width, height))
+                link = link.replace('{width}', str(max(1, round(width * scale))))
+                link = link.replace('{height}', str(max(1, round(height * scale))))
+                parsed = urlsplit(link)
+                if parsed.scheme != 'https' or not parsed.hostname or '{' in link:
+                    continue
+            except (TypeError, ValueError):
+                continue
+            if link not in images:
+                images.append(link)
+        return images
 
     def parse_offer(self, item):
         if item.get('status', 'active') != 'active':
             return None
-        params = {p.get('key'): p.get('value') for p in item.get('params', [])}
+        params = {p.get('key'): p.get('value') for p in item.get('params') or [] if isinstance(p, dict)}
         value = params.get('price') or {}
         if not isinstance(value, dict) or value.get('currency', 'EUR') != 'EUR':
             return None
@@ -25,7 +51,8 @@ class OlxScraper(BaseScraper):
         return self.build_listing(item.get('id'), item.get('title',''), value.get('value'),
                                   item.get('url') or f"https://www.olx.pt/{item.get('id')}/",
                                   item.get('description') or '', location,
-                                  'new' if key == 'new' else 'used')
+                                  key if key in {'new', 'used'} else 'unknown',
+                                  images=self.image_urls(item), currency=value.get('currency', 'EUR'))
 
     def search(self, query):
         fetched = matched = 0
@@ -56,6 +83,6 @@ class OlxScraper(BaseScraper):
                 self.diagnostics.append(f'{query}: PAGE CAP reached; more listings may exist')
             else:
                 self.throttle()
-        self.diagnostics.append(f'{query}: {fetched} fetched, {matched} recognised')
+        self.diagnostics.append(f'{query}: {fetched} fetched, {matched} collected for classification')
         if fetched and not matched:
-            self.diagnostics.append(f'{query}: WARNING no components recognised; check results/query support')
+            self.diagnostics.append(f'{query}: WARNING no valid cash listings collected; check results/query support')

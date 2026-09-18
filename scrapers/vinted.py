@@ -14,6 +14,14 @@ from .base import BaseScraper
 class VintedScraper(BaseScraper):
     site = 'vinted'
     API = 'https://www.vinted.pt/api/v2'
+    # Sale state only: these labels do not establish functional condition.
+    SALE_CONDITIONS = {
+        'novo com etiquetas': 'new', 'novo sem etiquetas': 'new',
+        'new with tags': 'new', 'new without tags': 'new',
+        'muito bom': 'used', 'bom': 'used', 'satisfatório': 'used',
+        'usado': 'used', 'very good': 'used', 'good': 'used',
+        'satisfactory': 'used', 'used': 'used',
+    }
 
     def __init__(self, max_detail_requests=20):
         super().__init__()
@@ -48,10 +56,14 @@ class VintedScraper(BaseScraper):
                 images.append(photo_url)
         # Vinted status labels are seller claims, not proof of functionality.
         state = item.get('status')
-        condition = state if isinstance(state, str) and state.strip() else 'unknown'
+        state = state.strip() if isinstance(state, str) else ''
+        condition = self.SALE_CONDITIONS.get(state.casefold(), 'unknown')
+        description = item.get('description') or ''
+        if state:
+            description += ('\n' if description else '') + f'Estado anunciado (Vinted): {state}'
         return self.build_listing(
             listing_id, item.get('title') or '', price, url,
-            description=item.get('description') or '', location='',
+            description=description, location='',
             condition=condition, images=images, currency=currency,
         )
 

@@ -24,6 +24,30 @@ class VintedAdapterTests(unittest.TestCase):
             self.assertEqual(build.call_args.kwargs['description'], 'Só o cooler.')
             self.assertEqual(build.call_args.kwargs['currency'], 'EUR')
 
+    def test_explicit_sale_state_mapping_preserves_original_label(self):
+        for label, expected in (
+            ('Novo com etiquetas', 'new'), ('Novo sem etiquetas', 'new'),
+            ('Muito bom', 'used'), ('Bom', 'used'), ('Satisfatório', 'used'),
+            ('New with tags', 'new'), ('New without tags', 'new'),
+            ('Very good', 'used'), ('Good', 'used'), ('Satisfactory', 'used'),
+            ('Usado', 'used'), ('Used', 'used'),
+            ('Não está totalmente funcional', 'unknown'),
+            ('Não testado', 'unknown'), ('unfamiliar label', 'unknown'),
+        ):
+            with self.subTest(label=label), patch.object(self.scraper, 'build_listing') as build:
+                self.scraper.parse_offer(self.item(status=label))
+                self.assertEqual(build.call_args.kwargs['condition'], expected)
+                self.assertEqual(build.call_args.kwargs['description'],
+                                 f'Só o cooler.\nEstado anunciado (Vinted): {label}')
+                # Mapping never injects a claim of testing or functionality.
+
+    def test_missing_and_numeric_status_remain_unknown(self):
+        for state in (None, '', 1):
+            with patch.object(self.scraper, 'build_listing') as build:
+                self.scraper.parse_offer(self.item(status=state))
+                self.assertEqual(build.call_args.kwargs['condition'], 'unknown')
+                self.assertEqual(build.call_args.kwargs['description'], 'Só o cooler.')
+
     def test_no_price_or_currency_invention(self):
         with patch.object(self.scraper, 'build_listing') as build:
             self.assertIsNone(self.scraper.parse_offer(self.item(price=None)))

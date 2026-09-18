@@ -4,7 +4,7 @@ O adaptador `scrapers.vinted.VintedScraper` produz anúncios brutos através da 
 
 A API web não é documentada como API pública estável. A integração foi testada com respostas sintéticas quanto ao contrato e à gestão de falhas; a compatibilidade com o serviço ao vivo **não foi validada**. Não é necessário nem solicitado um cookie privado. Se o serviço bloquear o acesso, fica indisponível e isso deve aparecer no diagnóstico.
 
-A moeda vem do anúncio; não é assumido EUR. O preço é `price.amount`, nunca o valor com Proteção do Comprador. Etiquetas de estado são conservadas literalmente; não são convertidas em prova de funcionamento. Artigos vendidos, ocultos, reservados ou fechados são omitidos quando estes indicadores existem. Não existem operações de compra ou mensagens.
+A moeda vem do anúncio; não é assumido EUR. O preço é `price.amount`, nunca o valor com Proteção do Comprador. Etiquetas de estado são conservadas literalmente na descrição como “Estado anunciado (Vinted)”. Apenas etiquetas conhecidas em português e inglês são mapeadas para estado de venda `new` ou `used`; etiquetas ausentes, numéricas ou desconhecidas ficam `unknown`. “Muito bom” não é prova de funcionamento: a condição funcional continua a exigir evidência textual explícita no classificador partilhado. Artigos vendidos, ocultos, reservados ou fechados são omitidos quando estes indicadores existem. Não existem operações de compra ou mensagens.
 
 ## Evidência real e limitações (2026-09-18)
 
@@ -15,7 +15,7 @@ A pesquisa web encontrou dois anúncios reais portugueses no índice histórico,
 - [RX 5700 com defeito](https://www.vinted.pt/items/6538968398-placa-grafica-rx-5700-8gb-gddr6-defeito): preço anunciado indexado de 80 EUR, defeito explícito. O índice mostra o artigo retirado. Serve como caso histórico de linguagem portuguesa, nunca como inventário atual.
 - [Gigabyte RTX 3080 10GB](https://www.vinted.pt/items/6538912763-gigabyte-rtx-3080-10gb): só título recuperável, sem preço nem descrição. O preço fica nulo e não pode alimentar comparações.
 
-O índice indicava recolha há 1,2 anos; a data exata da publicação não foi recuperada. Estes exemplos não são respostas da API, não demonstram disponibilidade atual e não foram submetidos a um modelo real pelo agente Vinted. A fixture não deve ser importada como anúncio ativo. Os nove testes de transporte/contrato são sintéticos; o décimo verifica apenas a integridade da evidência histórica, não a classificação por IA.
+O índice indicava recolha há 1,2 anos; a data exata da publicação não foi recuperada. Estes exemplos não são respostas da API, não demonstram disponibilidade atual e não foram submetidos a um modelo real pelo agente Vinted. A fixture não deve ser importada como anúncio ativo. Os onze testes de transporte/contrato são sintéticos; o décimo segundo verifica apenas a integridade da evidência histórica, não a classificação por IA.
 
 ## Executar no Nobara
 

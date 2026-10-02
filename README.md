@@ -1,4 +1,12 @@
-# OLX component deal finder
+# PC component price tracker
+
+A local Python application for comparing **GPU, CPU and RAM listings on OLX Portugal**. It turns inconsistent listing text into component comparison groups, stores observations and price changes in SQLite, and produces a searchable HTML report of lower-priced candidates.
+
+Built as a personal software project, it combines data collection, text-based classification, persistent storage and transparent comparison rules. A low asking price is a prompt for manual investigation, not proof of a profitable purchase.
+
+> **Start from the repository root.** The current application is the OLX-only implementation described here. `gpu_tracker/` contains a separate, older multi-site implementation with different dependencies and commands; it is not imported by the root application.
+
+## Quick start
 
 Python 3.10+; no third-party packages required. Extract this entire folder first.
 On Windows, double-click `run_tracker.bat` (requires the Python launcher), or run:
@@ -65,3 +73,31 @@ The RAM search reached that cap. The default app run searches more broadly.
 To start without these observations, rename `gpu_tracker.db` before the first run.
 The included report uses real observations from that limited validation scan;
 its collection details are in the report, and it is not a complete market survey.
+
+## How the code fits together
+
+```text
+OLX searches → validated listings → component/specification matching
+             → SQLite observations and price history → local HTML report
+```
+
+| File | Responsibility |
+| --- | --- |
+| `main.py` | Command-line options, one-off scans, run status and report opening |
+| `config.py` | Model vocabulary, queries, thresholds, time window and request limits |
+| `scrapers/olx.py` | Paginated OLX collection and offer parsing |
+| `scrapers/base.py` | Standard-library HTTP, throttling and per-query error isolation |
+| `matcher.py` | Text normalisation, component recognition and defect/bundle filtering |
+| `db.py` | SQLite schema migration, deduplication, price history and cohort medians |
+| `report.py` | HTML generation, scan diagnostics, category filter and text search |
+| `tests/test_tracker.py` | Matching, storage, reporting and mocked collection regression tests |
+
+## Design details
+
+- **Compare like with like.** `RTX 2060 6GB` and unknown-VRAM variants remain separate; RAM groups retain generation, capacity, module layout, speed and form factor when recognised.
+- **Use context for ambiguous names.** `Ryzen 5600` and `RX 5600 XT` classify differently; a bare ambiguous `5600` is left unclassified. RAM speed numbers must not become GPU models.
+- **Preserve useful partial results.** A failed later page does not discard earlier listings from that query. Repeated pages are detected and reported as a failure instead of silently counting them again.
+- **Expose collection limits.** The report includes page caps, failed queries, fetched/recognised counts and scan status. New listings and previously observed listings are labelled separately.
+- **Keep external text safe in the report.** Listing text is HTML-escaped, and clickable listing URLs are limited to HTTPS OLX hosts.
+
+The root implementation uses Python's standard library only. It does not need a web server, external database service or API credentials.
